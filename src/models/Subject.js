@@ -42,4 +42,4 @@ mongoose.Types.ObjectId.prototype.valueOf = function() {
   return this.toString();
 };
 
-module.exports = Subject = mongoose.model('Subject', SubjectSchema);
+module.exports = mongoose.model('Subject', SubjectSchema);

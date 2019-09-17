@@ -17,4 +17,4 @@ Schema.Types.ObjectId.prototype.valueOf = function () {
 };
 
 
-module.exports = EntryPeriod = mongoose.model('EntryPeriod', EntryPeriodSchema)
+module.exports = mongoose.model('EntryPeriod', EntryPeriodSchema)

@@ -27,4 +27,4 @@ Schema.Types.ObjectId.prototype.valueOf = function() {
   return this.toString();
 };
 
-module.exports = AcademicLoad = mongoose.model('AcademicLoad', AcademicLoadSchema);
+module.exports = mongoose.model('AcademicLoad', AcademicLoadSchema);

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const Schema = mongoose.Schema;
 
@@ -26,8 +27,8 @@ const UserSchema = new Schema({
         ref: 'EducationalProgram'
     },
     entryPeriod: {
-        type: String,
-        required: true
+        type: Schema.Types.ObjectId,
+        ref: 'EntryPeriod'
     },
     email: [String],
     password: {
@@ -38,6 +39,14 @@ const UserSchema = new Schema({
     address: {
         type: String,
         required: false
+    },
+    gender: {
+        type: String,
+        enum: ['HOMBRE', 'MUJER']
+    },
+    dateofBirth: {
+        type: Date,
+        required: true
     },
     academicLoad : [
         {
@@ -51,4 +60,15 @@ mongoose.Types.ObjectId.prototype.valueOf = function() {
   return this.toString();
 };
 
-module.exports = User = mongoose.model('User', UserSchema);
+UserSchema.pre("save", function (next) {
+    let user = this;
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(user.password, salt, (err, hash) => {
+            if (err) return next(err);
+            user.password = hash;
+            next();
+        })
+    })
+})
+
+module.exports = mongoose.model('User', UserSchema);

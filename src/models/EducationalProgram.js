@@ -32,4 +32,4 @@ mongoose.Types.ObjectId.prototype.valueOf = function() {
   return this.toString();
 };
 
-module.exports = EducationalProgram = mongoose.model('EducationalProgram', EducationalProgramSchema); 
+module.exports = mongoose.model('EducationalProgram', EducationalProgramSchema); 

@@ -12,4 +12,4 @@ Schema.Types.ObjectId.prototype.valueOf = function () {
     return this.toString();
 };
 
-module.exports = FieldStudy = mongoose.model('FieldStudy', FieldStudySchema);
+module.exports = mongoose.model('FieldStudy', FieldStudySchema);

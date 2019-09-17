@@ -9,6 +9,15 @@ const typeDefs = gql`
         STUDENT
     }
 
+    enum Gender {
+        HOMBRE
+        MUJER
+    }
+
+    type Token {
+        token: String
+    }
+
     type Notice {
         author: User
         title: String!
@@ -75,11 +84,27 @@ const typeDefs = gql`
         password: String!
         phone: [String]
         address: String
+        gender: Gender
+        dateofBirth: String!
         academicLoad: [AcademicLoad]
     }
 
+    input UserInput {
+        name: String!
+        lastName: String!
+        userEnrollment: Int!
+        role: Role
+        password: String!
+        gender: Gender
+        dateofBirth: String!
+    }
+
     type Query {
-        getUsers: [User]
+        getStudents: [User]
+    }
+
+    type Mutation {
+        addStudent(data: UserInput): Token
     }
 
 `;

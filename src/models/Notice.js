@@ -24,4 +24,4 @@ mongoose.Types.ObjectId.prototype.valueOf = function () {
     return this.toString();
 };
 
-module.exports = Notice = mongoose.model('Notice', NoticeSchema);
+module.exports = mongoose.model('Notice', NoticeSchema);
