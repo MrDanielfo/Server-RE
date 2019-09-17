@@ -19,7 +19,7 @@ const UserSchema = new Schema({
     },
     role: {
         type: String,
-        enum: ['SuperAdmin', 'Admin', 'Teacher', 'Student']
+        enum: ['SUPER', 'ADMIN', 'TEACHER', 'STUDENT']
     },
     educationalProgram: {
         type: Schema.Types.ObjectId,
@@ -29,16 +29,12 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    email: [
-        { emailAddress: String }
-    ],
+    email: [String],
     password: {
         type: String,
         required: true
     },
-    phone: [
-        { phoneNumber: String }
-    ],
+    phone: [String],
     address: {
         type: String,
         required: false

@@ -3,6 +3,10 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const AcademicLoadSchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
     student: {
         type: Schema.Types.ObjectId,
         ref: 'User'
@@ -13,30 +17,13 @@ const AcademicLoadSchema = new Schema({
     },
     grades: [
         {
-            subject: {
-                type: Schema.Types.ObjectId,
-                ref: 'Subject'
-            },
-            first: {
-                type: Number
-            },
-            second: {
-                type: Number
-            },
-            third: {
-                type: Number
-            },
-            fourth : {
-                type: Number
-            },
-            final: {
-                type: Number
-            }      
+            type: Schema.Types.ObjectId,
+            ref: 'Grade'
         }
     ]
 }, { timestamps: true });
 
-mongoose.Types.ObjectId.prototype.valueOf = function() {
+Schema.Types.ObjectId.prototype.valueOf = function() {
   return this.toString();
 };
 

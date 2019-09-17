@@ -10,13 +10,9 @@ const NoticeSchema = new Schema({
         type: String,
         required: true
     },
-    text: {
+    body: {
         type: String,
         required: true
-    },
-    to: {
-        type: Schema.Types.ObjectId,
-        ref: 'Subject'
     },
     published: {
         type: Boolean,
