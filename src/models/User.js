@@ -53,7 +53,11 @@ const UserSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'AcademicLoad'
         }
-    ]
+    ],
+    active : {
+        type: Boolean,
+        required: true
+    }
 }, { timestamps: true })
 
 mongoose.Types.ObjectId.prototype.valueOf = function() {

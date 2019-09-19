@@ -4,11 +4,10 @@ const Schema = mongoose.Schema;
 const EntryPeriodSchema = new Schema({
     season: {
         type: String,
-        required: true
+        enum: ['PRIMAVERA', 'OTONO']
     },
     year: {
-        type: Date,
-        required: true
+        type: Number,
     }
 }, { timestamps: true });
 

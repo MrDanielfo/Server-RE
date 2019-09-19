@@ -1,4 +1,3 @@
-import User from '../models/User';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -11,7 +10,7 @@ Date.prototype.addDays = function (days) {
     return date;
 }
 
-const createToken = (user) => {
+export const createToken = (user) => {
     const exp = new Date().addDays(1).getTime();
     const payload = {
         _id: user._id,
@@ -21,14 +20,4 @@ const createToken = (user) => {
     };
     const token = jwt.sign(payload, SECRET);
     return { token }; 
-}
-
-export const createStudent = async (student) => {
-    try {
-        const newStudent = await User.create(student);
-        const token = createToken(newStudent);
-        return token;
-    } catch (err) {
-        console.error(err)
-    }
 }
