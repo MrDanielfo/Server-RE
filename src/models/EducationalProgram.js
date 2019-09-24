@@ -23,7 +23,7 @@ const EducationalProgramSchema = new Schema({
     ],
     fieldStudy: {
         type: Schema.Types.ObjectId,
-        ref: 'Field'
+        ref: 'FieldStudy'
     }
 
 }, { timestamps: true });

@@ -75,7 +75,7 @@ const typeDefs = gql`
         code: String!
         yearCreation: String!
         subjects: [Subject]
-        fieldStudy: [FieldStudy]
+        fieldStudy: FieldStudy!
     }
 
     type User {
@@ -120,9 +120,30 @@ const typeDefs = gql`
         year: Int
     }
 
+    input FieldStudyInput {
+        area: String!
+    }
+
+    input EducationalProgramInput {
+        name: String!
+        code: String!
+        yearCreation: String!
+        subjects: ID
+        fieldStudy: ID!
+    }
+
+    input EducationalProgramUpdateInput {
+        name: String
+        code: String
+        yearCreation: String
+        fieldStudy: ID
+    }
+
     type Query {
         getStudents: [User]
         getEntryPeriods: [EntryPeriod]
+        getFieldStudies: [FieldStudy]
+        getEducationalPrograms : [EducationalProgram]
     }
 
     type Mutation {
@@ -132,6 +153,12 @@ const typeDefs = gql`
         addEntryPeriod(data: EntryPeriodInput): EntryPeriod
         updateEntryPeriod(data: EntryPeriodInput, entryID: ID): EntryPeriod
         deleteEntryPeriod(entryID: ID): EntryPeriod
+        addFieldStudy(data: FieldStudyInput): FieldStudy
+        updateFieldStudy(data: FieldStudyInput, fieldID: ID): FieldStudy
+        deleteFieldStudy(fieldID: ID): FieldStudy
+        addEducationalProgram(data: EducationalProgramInput): EducationalProgram
+        updateEducationalProgram(data: EducationalProgramUpdateInput, educationalID: ID): EducationalProgram
+        deleteEducationalProgram(educationalID: ID): EducationalProgram
     }
 
 `;
