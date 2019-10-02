@@ -11,8 +11,7 @@ export const createEducationalProgram = async (educationalProgram) => {
 
 export const getEducationalPrograms = async () => {
     try {
-        const educationalPrograms = await EducationalProgram.find()
-                                    .populate('fieldStudy', ['area']);
+        const educationalPrograms = await EducationalProgram.find().populate('fieldStudy', ['area']);
         return educationalPrograms;
     } catch (err) {
         console.log(err)

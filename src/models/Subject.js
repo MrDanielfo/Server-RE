@@ -27,14 +27,10 @@ const SubjectSchema = new Schema({
         type: String,
         required: true
     },
-    schedule: [
-        {
-            time: {
-                type: String,
-                required: true
-            },   
-        }
-    ]
+    schedule: { 
+        type: String,
+        required: true
+    }
     
 }, { timestamps: true });
 

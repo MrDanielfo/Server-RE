@@ -1,8 +1,10 @@
 
 import { createStudent, getStudents, updateStudent, inactiveStudent } from '../actions/studentsActions';
+import { createTeacher, getTeachers, updateTeacher, inactiveTeacher } from '../actions/teacherActions';
 import { createEntryPeriod, getEntryPeriods, updateEntryPeriod, deleteEntryPeriod } from '../actions/entryPeriodActions';
 import { createFieldStudy, getFieldStudies, updateFieldStudy, deleteFieldStudy } from '../actions/fieldStudyActions';
 import { createEducationalProgram, getEducationalPrograms, updateEducationalProgram, deleteEducationalProgram } from '../actions/educationalProgramActions';
+import { createSubject, getSubjects, updateSubject, deleteSubject } from '../actions/subjectActions';
 
 const resolvers = {
 
@@ -12,6 +14,13 @@ const resolvers = {
                 return await getStudents();
             } catch (err) {
                 return err; 
+            }
+        },
+        getTeachers: async (parent, args, ctx, info) => {
+            try {
+                return await getTeachers();
+            } catch (err) {
+                return err;
             }
         },
         getEntryPeriods: async(parent, args, ctx, info) => {
@@ -31,6 +40,13 @@ const resolvers = {
         getEducationalPrograms: async(parent, args, ctx, info) => {
             try {
                 return await getEducationalPrograms();
+            } catch (err) {
+                return err;
+            }
+        },
+        getSubjects: async(parent, args, ctx, info) => {
+            try {
+                return await getSubjects();
             } catch (err) {
                 return err;
             }
@@ -61,6 +77,32 @@ const resolvers = {
                 return await inactiveStudent(filter, update); 
             } catch (err) {
                 return err; 
+            }
+        },
+        addTeacher: async (parent, args, ctx, info) => {
+            try {
+                const newTeacher = createTeacher(args.data);
+                return newTeacher;
+            } catch (err) {
+                return err;
+            }
+        },
+        updateTeacher: async (parent, { data, userEnrollment }, ctx, info) => {
+            try {
+                const filter = { userEnrollment }
+                const update = { $set: { ...data } }
+                return await updateTeacher(filter, update);
+            } catch (err) {
+                return err;
+            }
+        },
+        deleteTeacher: async (parent, { userEnrollment }, ctx, info) => {
+            try {
+                const filter = { userEnrollment }
+                const update = { $set: { active: false } }
+                return await inactiveTeacher(filter, update);
+            } catch (err) {
+                return err;
             }
         },
         addEntryPeriod: async (parent, args, ctx, info) => {
@@ -137,6 +179,32 @@ const resolvers = {
             try {
                 const filter = { _id : educationalID }
                 return await deleteEducationalProgram(filter);
+            } catch (err) {
+                return err;
+            }
+        },
+        addSubject: async (parent, args, ctx, info) => {
+            try {
+                const newSubject = createSubject(args.data);
+                return newSubject;
+            } catch (err) {
+                return err;
+            }
+        },
+        updateSubject: async (parent, { data, subjectID }, ctx, info) => {
+            try {
+                const filter = { _id: subjectID }
+                const update = { $set: { ...data } }
+                const updated = await updateSubject(filter, update);
+                return updated;
+            } catch (err) {
+                return err;
+            }
+        },
+        deleteSubject: async (parent, { subjectID }, ctx, info) => {
+            try {
+                const filter = { _id: subjectID }
+                return await deleteSubject(filter);
             } catch (err) {
                 return err;
             }

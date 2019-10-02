@@ -49,7 +49,7 @@ const typeDefs = gql`
         credits: Int!
         teacher: User
         classroom: String
-        schedule: [String]
+        schedule: String
     }
 
     type Grade {
@@ -139,17 +139,32 @@ const typeDefs = gql`
         fieldStudy: ID
     }
 
+    input SubjectInput {
+        name: String!
+        code: String!
+        educationalProgram: ID
+        credits: Int!
+        teacher: ID
+        classroom: String
+        schedule: String
+    }
+
     type Query {
         getStudents: [User]
+        getTeachers: [User]
         getEntryPeriods: [EntryPeriod]
         getFieldStudies: [FieldStudy]
         getEducationalPrograms : [EducationalProgram]
+        getSubjects : [Subject]
     }
 
     type Mutation {
         addStudent(data: UserInput): Token
         updateStudent(data: UpdateStudentInput, userEnrollment: Int): User
         deleteStudent(userEnrollment: Int): User
+        addTeacher(data: UserInput): Token
+        updateTeacher(data: UpdateStudentInput, userEnrollment: Int): User
+        deleteTeacher(userEnrollment: Int): User
         addEntryPeriod(data: EntryPeriodInput): EntryPeriod
         updateEntryPeriod(data: EntryPeriodInput, entryID: ID): EntryPeriod
         deleteEntryPeriod(entryID: ID): EntryPeriod
@@ -159,6 +174,9 @@ const typeDefs = gql`
         addEducationalProgram(data: EducationalProgramInput): EducationalProgram
         updateEducationalProgram(data: EducationalProgramUpdateInput, educationalID: ID): EducationalProgram
         deleteEducationalProgram(educationalID: ID): EducationalProgram
+        addSubject(data: SubjectInput): Subject
+        updateSubject(data: SubjectInput, subjectID: ID): Subject
+        deleteSubject(subjectID: ID): Subject
     }
 
 `;
