@@ -24,6 +24,7 @@ const typeDefs = gql`
     }
 
     type Notice {
+        _id: ID
         author: User
         title: String!
         body: String!
@@ -55,6 +56,7 @@ const typeDefs = gql`
     type Grade {
         _id: ID
         subject: Subject
+        student: User
         first: Float!
         second: Float!
         third: Float!
@@ -148,14 +150,33 @@ const typeDefs = gql`
         classroom: String
         schedule: String
     }
+    
+    input NoticeInput {
+        author: ID!
+        title: String!
+        body: String!
+        published: Boolean!
+    }
+
+    input GradeInput {
+        subject: ID!
+        student: ID!
+        first: Float
+        second: Float
+        third: Float
+        final: Float
+        approved: Boolean
+    }
 
     type Query {
         getStudents: [User]
         getTeachers: [User]
         getEntryPeriods: [EntryPeriod]
         getFieldStudies: [FieldStudy]
-        getEducationalPrograms : [EducationalProgram]
-        getSubjects : [Subject]
+        getEducationalPrograms: [EducationalProgram]
+        getSubjects: [Subject]
+        getNotices: [Notice]
+        getGrades: [Grade]
     }
 
     type Mutation {
@@ -177,6 +198,12 @@ const typeDefs = gql`
         addSubject(data: SubjectInput): Subject
         updateSubject(data: SubjectInput, subjectID: ID): Subject
         deleteSubject(subjectID: ID): Subject
+        addNotice(data: NoticeInput): Notice
+        updateNotice(data: NoticeInput, noticeID: ID): Notice
+        deleteNotice(noticeID: ID): Notice
+        addGrade(data: GradeInput): Grade
+        updateGrade(data: GradeInput, gradeID: ID): Grade
+        deleteGrade(gradeID: ID): Grade
     }
 
 `;

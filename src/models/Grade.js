@@ -1,10 +1,14 @@
-import mongoose from 'moongose';
+import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const GradeSchema = new Schema({
     subject: {
         type: Schema.Types.ObjectId,
         ref: 'Subject'
+    },
+    student: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
     first: {
         type: Number

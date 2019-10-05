@@ -16,7 +16,7 @@ const NoticeSchema = new Schema({
     },
     published: {
         type: Boolean,
-        default: false
+        default: true
     }
 }, { timestamps: true});
 

@@ -5,6 +5,8 @@ import { createEntryPeriod, getEntryPeriods, updateEntryPeriod, deleteEntryPerio
 import { createFieldStudy, getFieldStudies, updateFieldStudy, deleteFieldStudy } from '../actions/fieldStudyActions';
 import { createEducationalProgram, getEducationalPrograms, updateEducationalProgram, deleteEducationalProgram } from '../actions/educationalProgramActions';
 import { createSubject, getSubjects, updateSubject, deleteSubject } from '../actions/subjectActions';
+import { createNotice, getNotices, updateNotice, deleteNotice } from '../actions/noticeActions';
+import { createGrade, getGrades, updateGrade, deleteGrade } from '../actions/gradeActions';
 
 const resolvers = {
 
@@ -50,12 +52,26 @@ const resolvers = {
             } catch (err) {
                 return err;
             }
+        },
+        getNotices: async () => {
+            try {
+                return await getNotices();
+            } catch (err) {
+                return err;
+            }
+        },
+        getGrades: async () => {
+            try {
+                return await getGrades();
+            } catch (err) {
+                return err;
+            }
         }
     },
     Mutation: {
         addStudent: async (parent, args, ctx, info) => {
             try {
-                const newStudent = createStudent(args.data);
+                const newStudent = await createStudent(args.data);
                 return newStudent;
             } catch (err) {
                 return err;
@@ -107,7 +123,7 @@ const resolvers = {
         },
         addEntryPeriod: async (parent, args, ctx, info) => {
             try {
-                const newEntryPeriod = createEntryPeriod(args.data);
+                const newEntryPeriod = await createEntryPeriod(args.data);
                 return newEntryPeriod;
             } catch (err) {
                 return err;
@@ -133,7 +149,7 @@ const resolvers = {
         },
         addFieldStudy: async (parent, args, ctx, info) => {
             try {
-                const newFieldStudy = createFieldStudy(args.data);
+                const newFieldStudy = await createFieldStudy(args.data);
                 return newFieldStudy;
             } catch (err) {
                 return err;
@@ -159,7 +175,7 @@ const resolvers = {
         },
         addEducationalProgram: async (parent, args, ctx, info) => {
             try {
-                const newEducationalProgram = createEducationalProgram(args.data);
+                const newEducationalProgram = await createEducationalProgram(args.data);
                 return newEducationalProgram;
             } catch (err) {
                 return err;
@@ -205,6 +221,58 @@ const resolvers = {
             try {
                 const filter = { _id: subjectID }
                 return await deleteSubject(filter);
+            } catch (err) {
+                return err;
+            }
+        },
+        addNotice: async (parent, { data }, ctx, info ) => {
+            try {
+                const newNotice = await createNotice(data);
+                return newNotice;
+            } catch (err) {
+                return err;
+            }
+        },
+        updateNotice: async (parent, { data, noticeID }, ctx, info) => {
+            try {
+                const filter = { _id: noticeID }
+                const update = { $set: { ...data } }
+                const updated = await updateNotice(filter, update);
+                return updated;
+            } catch (err) {
+                return err;
+            }
+        },
+        deleteNotice: async (parent, { noticeID }, ctx, info) => {
+            try {
+                const filter = { _id: noticeID }
+                return await deleteNotice(filter);
+            } catch (err) {
+                return err;
+            }
+        },
+        addGrade: async (parent, { data }, ctx, info) => {
+            try {
+                const newGrade = await createGrade(data);
+                return newGrade;
+            } catch (err) {
+                return err;
+            }
+        },
+        updateGrade: async (parent, { data, gradeID }, ctx, info) => {
+            try {
+                const filter = { _id: gradeID }
+                const update = { $set: { ...data } }
+                const updated = await updateGrade(filter, update);
+                return updated;
+            } catch (err) {
+                return err;
+            }
+        },
+        deleteGrade: async (parent, { gradeID }, ctx, info) => {
+            try {
+                const filter = { _id: gradeID }
+                return await deleteGrade(filter);
             } catch (err) {
                 return err;
             }

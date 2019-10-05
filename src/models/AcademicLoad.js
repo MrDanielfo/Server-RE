@@ -20,7 +20,12 @@ const AcademicLoadSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Grade'
         }
-    ]
+    ],
+    active: {
+        type: Boolean,
+        required: true,
+        default: true
+    }
 }, { timestamps: true });
 
 Schema.Types.ObjectId.prototype.valueOf = function() {
