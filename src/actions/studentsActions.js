@@ -23,7 +23,7 @@ export const getStudents = async () => {
 
 export const updateStudent = async (filter, update) => {
     try {
-        const studentUpdated = User.findOneAndUpdate(filter, update, { new: true});
+        const studentUpdated = User.findOneAndUpdate(filter, update);
         return await studentUpdated;
     } catch (err) {
         console.error(err)

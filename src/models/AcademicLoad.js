@@ -12,18 +12,17 @@ const AcademicLoadSchema = new Schema({
         ref: 'User'
     },
     period: {
-        type: Date,
+        type: String,
         required: true
     },
     grades: [
         {
             type: Schema.Types.ObjectId,
             ref: 'Grade'
-        }
+        },
     ],
     active: {
         type: Boolean,
-        required: true,
         default: true
     }
 }, { timestamps: true });

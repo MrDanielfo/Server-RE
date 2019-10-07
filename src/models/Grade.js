@@ -10,6 +10,10 @@ const GradeSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
+    academicLoad: {
+        type: Schema.Types.ObjectId,
+        ref: 'AcademicLoad'
+    },
     first: {
         type: Number
     },

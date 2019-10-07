@@ -57,6 +57,7 @@ const typeDefs = gql`
         _id: ID
         subject: Subject
         student: User
+        academicLoad: AcademicLoad
         first: Float!
         second: Float!
         third: Float!
@@ -69,6 +70,7 @@ const typeDefs = gql`
         student: User
         period: String!
         grades: [Grade]
+        active: Boolean!
     }
 
     type EducationalProgram {
@@ -111,10 +113,16 @@ const typeDefs = gql`
     input UpdateStudentInput {
         name: String
         lastName: String
+        userEnrollment: Int
         password: String
         email: [String]
         phone: [String]
         address: String
+        educationalProgram: ID
+        entryPeriod: ID
+        gender: Gender
+        dateofBirth: String
+        academicLoad: ID
     }
 
     input EntryPeriodInput {
@@ -161,11 +169,20 @@ const typeDefs = gql`
     input GradeInput {
         subject: ID!
         student: ID!
+        academicLoad: ID!
         first: Float
         second: Float
         third: Float
         final: Float
         approved: Boolean
+    }
+
+    input AcademicLoadInput {
+        name: String
+        student: ID!
+        period: String
+        grades: ID
+        active: Boolean
     }
 
     type Query {
@@ -177,6 +194,7 @@ const typeDefs = gql`
         getSubjects: [Subject]
         getNotices: [Notice]
         getGrades: [Grade]
+        getAcademicLoads: [AcademicLoad]
     }
 
     type Mutation {
@@ -204,6 +222,9 @@ const typeDefs = gql`
         addGrade(data: GradeInput): Grade
         updateGrade(data: GradeInput, gradeID: ID): Grade
         deleteGrade(gradeID: ID): Grade
+        addAcademicLoad(data: AcademicLoadInput): AcademicLoad
+        updateAcademicLoad(data: AcademicLoadInput, academicID: ID): AcademicLoad
+        deleteAcademicLoad(academicID: ID): AcademicLoad
     }
 
 `;

@@ -7,6 +7,7 @@ import { createEducationalProgram, getEducationalPrograms, updateEducationalProg
 import { createSubject, getSubjects, updateSubject, deleteSubject } from '../actions/subjectActions';
 import { createNotice, getNotices, updateNotice, deleteNotice } from '../actions/noticeActions';
 import { createGrade, getGrades, updateGrade, deleteGrade } from '../actions/gradeActions';
+import { createAcademicLoad, getAcademicLoads, updateAcademicLoad, deleteAcademicLoad } from '../actions/academicLoadActions';
 
 const resolvers = {
 
@@ -63,6 +64,13 @@ const resolvers = {
         getGrades: async () => {
             try {
                 return await getGrades();
+            } catch (err) {
+                return err;
+            }
+        },
+        getAcademicLoads: async () => {
+            try {
+                return await getAcademicLoads();
             } catch (err) {
                 return err;
             }
@@ -273,6 +281,32 @@ const resolvers = {
             try {
                 const filter = { _id: gradeID }
                 return await deleteGrade(filter);
+            } catch (err) {
+                return err;
+            }
+        },
+        addAcademicLoad: async (parent, { data }, ctx, info) => {
+            try {
+                const newAcademicLoad = await createAcademicLoad(data);
+                return newAcademicLoad;
+            } catch (err) {
+                return err;
+            }
+        },
+        updateAcademicLoad: async (parent, { data, academicID }, ctx, info) => {
+            try {
+                const filter = { _id: academicID }
+                const update = { $set: { ...data } }
+                const updated = await updateAcademicLoad(filter, update);
+                return updated;
+            } catch (err) {
+                return err;
+            }
+        },
+        deleteAcademicLoad: async (parent, { academicID }, ctx, info) => {
+            try {
+                const filter = { _id: academicID }
+                return await deleteAcademicLoad(filter);
             } catch (err) {
                 return err;
             }
