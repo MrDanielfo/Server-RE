@@ -1,6 +1,8 @@
-
+import { AuthenticationError } from 'apollo-server';
 import { createStudent, getStudents, updateStudent, inactiveStudent } from '../actions/studentsActions';
 import { createTeacher, getTeachers, updateTeacher, inactiveTeacher } from '../actions/teacherActions';
+import { createAdmin } from '../actions/adminUserActions';
+import { loginAction } from '../actions/userActions';
 import { createEntryPeriod, getEntryPeriods, updateEntryPeriod, deleteEntryPeriod } from '../actions/entryPeriodActions';
 import { createFieldStudy, getFieldStudies, updateFieldStudy, deleteFieldStudy } from '../actions/fieldStudyActions';
 import { createEducationalProgram, getEducationalPrograms, updateEducationalProgram, deleteEducationalProgram } from '../actions/educationalProgramActions';
@@ -9,72 +11,87 @@ import { createNotice, getNotices, updateNotice, deleteNotice } from '../actions
 import { createGrade, getGrades, updateGrade, deleteGrade } from '../actions/gradeActions';
 import { createAcademicLoad, getAcademicLoads, updateAcademicLoad, deleteAcademicLoad } from '../actions/academicLoadActions';
 
+const userAuthenticated = next => (root, args, ctx, info) => {
+    if (!ctx.currentUser) {
+        throw new AuthenticationError('You must be logged in');
+    }
+    return next(root, args, ctx, info)
+}
+
 const resolvers = {
 
     Query: {
-        getStudents: async(parent, args, ctx, info) => {
+        getStudents: userAuthenticated( async(parent, args, ctx, info) => {
             try {
-                return await getStudents();
+                const { role } = ctx.currentUser
+                console.log(role)
+                if(role === 'ADMIN') {
+                    return await getStudents();
+                } else {
+                    let message = "Only Admin or SuperAdmin can access to the data";
+                    return await message;
+                }
+                
             } catch (err) {
                 return err; 
             }
-        },
-        getTeachers: async (parent, args, ctx, info) => {
+        }),
+        getTeachers: userAuthenticated( async (parent, args, ctx, info) => {
             try {
                 return await getTeachers();
             } catch (err) {
                 return err;
             }
-        },
-        getEntryPeriods: async(parent, args, ctx, info) => {
+        }),
+        getEntryPeriods: userAuthenticated( async (parent, args, ctx, info) => {
             try {
                 return await getEntryPeriods();
             } catch (err) {
                 return err;
             }
-        },
-        getFieldStudies: async(parent, args, ctx, info) => {
+        }),
+        getFieldStudies: userAuthenticated( async(parent, args, ctx, info) => {
             try {
                 return await getFieldStudies();
             } catch (err) {
                 return err;
             }
-        },
-        getEducationalPrograms: async(parent, args, ctx, info) => {
+        }),
+        getEducationalPrograms: userAuthenticated( async (parent, args, ctx, info) => {
             try {
                 return await getEducationalPrograms();
             } catch (err) {
                 return err;
             }
-        },
-        getSubjects: async(parent, args, ctx, info) => {
+        }),
+        getSubjects: userAuthenticated( async (parent, args, ctx, info) => {
             try {
                 return await getSubjects();
             } catch (err) {
                 return err;
             }
-        },
-        getNotices: async () => {
+        }),
+        getNotices: userAuthenticated( async (ctx) => {
             try {
                 return await getNotices();
             } catch (err) {
                 return err;
             }
-        },
-        getGrades: async () => {
+        }),
+        getGrades: userAuthenticated( async (ctx) => {
             try {
                 return await getGrades();
             } catch (err) {
                 return err;
             }
-        },
-        getAcademicLoads: async () => {
+        }),
+        getAcademicLoads: userAuthenticated( async (ctx) => {
             try {
                 return await getAcademicLoads();
             } catch (err) {
                 return err;
             }
-        }
+        })
     },
     Mutation: {
         addStudent: async (parent, args, ctx, info) => {
@@ -309,6 +326,22 @@ const resolvers = {
                 return await deleteAcademicLoad(filter);
             } catch (err) {
                 return err;
+            }
+        },
+        addAdmin: async (parent, args, ctx, info) => {
+            try {
+                const newAdmin = await createAdmin(args.data);
+                return newAdmin;
+            } catch (err) {
+                return err;
+            }
+        },
+        doLogin: async (parent, { userEnrollment, password }, ctx, info) => {
+            try {
+                const login = await loginAction(userEnrollment, password);
+                return login;
+            } catch (err) {
+                return error;
             }
         }
     }

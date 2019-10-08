@@ -1,12 +1,12 @@
 import User from '../models/User';
-import { createToken }  from './userActions';
 
 export const createStudent = async (student) => {
     try {
         student.role = "STUDENT"
         const newStudent = await User.create(student);
-        const token = createToken(newStudent);
-        return token;
+        return newStudent;
+        // const token = createToken(newStudent);
+        // return token;
     } catch (err) {
         console.error(err)
     }

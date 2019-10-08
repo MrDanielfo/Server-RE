@@ -1,6 +1,8 @@
 import { ApolloServer } from 'apollo-server';
 import mongoose from 'mongoose';
 import { MONGO_URI, PORT } from './config/keys';
+import { getContext } from './actions/authActions';
+
 
 import resolvers from './graphql/resolvers';
 import typeDefs from './graphql/typeDefs';
@@ -17,7 +19,8 @@ mongoose.connect(MONGO_URI, {
 
 const server = new ApolloServer({
     typeDefs,
-    resolvers
+    resolvers,
+    context: async ({ req }) => getContext(req)
 });
 
 server.listen(PORT).then(({url}) => console.log(`🚀  Server ready at ${url}`));

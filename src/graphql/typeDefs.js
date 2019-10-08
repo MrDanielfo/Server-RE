@@ -198,10 +198,10 @@ const typeDefs = gql`
     }
 
     type Mutation {
-        addStudent(data: UserInput): Token
+        addStudent(data: UserInput): User
         updateStudent(data: UpdateStudentInput, userEnrollment: Int): User
         deleteStudent(userEnrollment: Int): User
-        addTeacher(data: UserInput): Token
+        addTeacher(data: UserInput): User
         updateTeacher(data: UpdateStudentInput, userEnrollment: Int): User
         deleteTeacher(userEnrollment: Int): User
         addEntryPeriod(data: EntryPeriodInput): EntryPeriod
@@ -225,6 +225,8 @@ const typeDefs = gql`
         addAcademicLoad(data: AcademicLoadInput): AcademicLoad
         updateAcademicLoad(data: AcademicLoadInput, academicID: ID): AcademicLoad
         deleteAcademicLoad(academicID: ID): AcademicLoad
+        addAdmin(data: UserInput): User
+        doLogin(userEnrollment: Int, password: String): Token
     }
 
 `;
